@@ -16,6 +16,10 @@ ifneq ($(CONFIG_ARCH_QTI_VM), y)
 PINEAPPLE_BASE_DTB += pineapple-v2.dtb pineapple-qcm.dtb
 PINEAPPLE_APQ_BASE_DTB += pineapplep-v2.dtb pineapplep-sg-v2.dtb pineappleq-v2.dtb pineapplep-qcs.dtb
 
+ifeq ($(CONFIG_SOMC_BOARD_NAME),asahi)
+PINEAPPLE_BOARDS += \
+		 pineapple-asahi-pdx245_generic-overlay.dtbo
+else
 PINEAPPLE_BOARDS += \
 		 pineapple-mtp-overlay.dtbo \
 		 pineapple-mtp-nfc-overlay.dtbo \
@@ -30,12 +34,14 @@ PINEAPPLE_BOARDS += \
 		 pineapplep-aim500-overlay.dtbo \
 		 pineapplep-aim500-v2-overlay.dtbo
 
+endif
 
 pineapple-dtb-$(CONFIG_ARCH_PINEAPPLE) += \
 	$(call add-overlays, $(PINEAPPLE_BOARDS) $(NOAPQ_PINEAPPLE_BOARDS),$(PINEAPPLE_BASE_DTB))\
 	$(call add-overlays, $(PINEAPPLE_BOARDS) $(APQ_PINEAPPLE_BOARDS),$(PINEAPPLE_APQ_BASE_DTB))
 pineapple-overlays-dtb-$(CONFIG_ARCH_PINEAPPLE) += $(PINEAPPLE_BOARDS) $(NOAPQ_PINEAPPLE_BOARDS) $(PINEAPPLE_BASE_DTB) $(PINEAPPLE_APQ_BASE_DTB)
 
+ifneq ($(CONFIG_SOMC_BOARD_NAME),asahi)
 CLIFFS_BASE_DTB += cliffs.dtb cliffs7.dtb
 CLIFFS_APQ_BASE_DTB += cliffsp.dtb cliffs7p.dtb
 
@@ -92,8 +98,11 @@ pineapple-dtb-$(CONFIG_ARCH_VOLCANO) += \
 	$(call add-overlays, $(VOLCANO_BOARDS) $(NOAPQ_VOLCANO_BOARDS),$(VOLCANO_BASE_DTB))\
 	$(call add-overlays, $(VOLCANO_BOARDS), $(VOLCANO_APQ_BASE_DTB))
 pineapple-overlays-dtb-$(CONFIG_ARCH_VOLCANO) += $(VOLCANO_BOARDS) $(NOAPQ_VOLCANO_BOARDS) $(VOLCANO_BASE_DTB) $(VOLCANO_APQ_BASE_DTB)
+endif
 
 dtb-y += $(pineapple-dtb-y)
+
+ifeq ($(CONFIG_SOMC_BOARD_NAME),asahi)
 
 KALAMA_BASE_DTB += kalama.dtb kalama-v2.dtb
 KALAMA_APQ_BASE_DTB += kalamap.dtb kalamap-v2.dtb
@@ -684,6 +693,8 @@ sdmsteppeauto-dtb-$(CONFIG_ARCH_SA6155) += \
 sdmsteppeauto-overlays-dtb-$(CONFIG_ARCH_SA6155) += $(SA6155_BOARDS) $(SA6155P_BOARDS) $(SA6155_BASE_DTB) $(SA6155P_BASE_DTB)
 
 dtb-y += $(sdmsteppeauto-dtb-y)
+
+endif
 
 always-y        := $(dtb-y)
 subdir-y        := $(dts-dirs)
