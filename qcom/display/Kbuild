@@ -6,6 +6,10 @@ dtbo-$(CONFIG_ARCH_NEO) += display/neo-sde.dtbo \
 endif
 
 ifneq ($(CONFIG_ARCH_QTI_VM), y)
+ifeq ($(CONFIG_SOMC_BOARD_NAME),asahi)
+dtbo-$(CONFIG_ARCH_PINEAPPLE) += display/pineapple-sde.dtbo \
+		display/pineapple-sde-display-asahi-cdb-overlay.dtbo
+else
 dtbo-$(CONFIG_ARCH_PINEAPPLE) += display/pineapple-sde.dtbo \
 		display/pineapple-sde-display-rumi-overlay.dtbo \
 		display/pineapple-sde-display-cdp-overlay.dtbo \
@@ -17,6 +21,7 @@ dtbo-$(CONFIG_ARCH_PINEAPPLE) += display/pineapple-sde.dtbo \
 		display/pineapple-sde-display-cdp-nfc-overlay.dtbo \
 		display/pineapple-sde-display-mtp-nfc-overlay.dtbo \
 		display/pineapple-sde-display-atp-overlay.dtbo
+endif
 else
 dtbo-$(CONFIG_ARCH_PINEAPPLE) += display/trustedvm-pineapple-sde-display-mtp-overlay.dtbo \
 		  display/trustedvm-pineapple-sde-display-cdp-overlay.dtbo \
