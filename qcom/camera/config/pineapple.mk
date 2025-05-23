@@ -1,4 +1,9 @@
 dtbo-$(CONFIG_ARCH_PINEAPPLE)	:= pineapple-camera.dtbo
+
+ifeq ($(CONFIG_SOMC_BOARD_NAME),asahi)
+dtbo-$(CONFIG_ARCH_PINEAPPLE)	+= pineapple-camera-sensor-pdx245.dtbo
+else
+
 dtbo-$(CONFIG_ARCH_PINEAPPLE)	+= pineapple-camera-v2.dtbo \
 									pineapple-camera-sensor-cdp.dtbo \
 									pineapple-camera-sensor-mtp.dtbo \
@@ -15,3 +20,4 @@ dtbo-$(CONFIG_ARCH_VOLCANO)     += volcano-camera-qrd.dtbo
 dtbo-$(CONFIG_ARCH_VOLCANO)     += volcano-camera-sensor-mtp.dtbo
 dtbo-$(CONFIG_ARCH_VOLCANO)     += volcano-camera-sensor-idp.dtbo
 dtbo-$(CONFIG_ARCH_VOLCANO)     += volcano-camera-sensor-qrd.dtbo
+endif
